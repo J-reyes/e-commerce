@@ -1,27 +1,60 @@
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 // db
-import 'firebase/firestore';
+import "firebase/firestore";
 // auth
-import 'firebase/auth';
+import "firebase/auth";
 
 const config = {
-    apiKey: "AIzaSyDklXQunICWW6h5wQXpdGohyGpyE1jdZiY",
-    authDomain: "commerce-db-7cdab.firebaseapp.com",
-    projectId: "commerce-db-7cdab",
-    storageBucket: "commerce-db-7cdab.appspot.com",
-    messagingSenderId: "282261706629",
-    appId: "1:282261706629:web:20f5b45134127c73f6d6ec",
-    measurementId: "G-CBCLVR5BP5"
+  apiKey: "AIzaSyDklXQunICWW6h5wQXpdGohyGpyE1jdZiY",
+  authDomain: "commerce-db-7cdab.firebaseapp.com",
+  projectId: "commerce-db-7cdab",
+  storageBucket: "commerce-db-7cdab.appspot.com",
+  messagingSenderId: "282261706629",
+  appId: "1:282261706629:web:20f5b45134127c73f6d6ec",
+  measurementId: "G-CBCLVR5BP5",
+};
+
+// API request - populates firebase bbut not the app's state
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  // if no userAuth
+  if(!userAuth) return;
+
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  
+  const snapShot = await userRef.get();
+  
+  // if snapshot of user does not exist
+  if(!snapShot.exists) {
+    // create it
+    const {displayName, email} = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      })
+    } catch (err) {
+      console.log('error creating user', err.message);
+    }
+  }
+
+  // incase we need to useRef again
+  return userRef
 };
 
 firebase.initializeApp(config);
 
+// google auth
 export const auth = firebase.auth();
+// db
 export const firestore = firebase.firestore();
 
 // google auth
 const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account'});
+provider.setCustomParameters({ prompt: "select_account" });
 // take provider as arg
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export default firebase;
