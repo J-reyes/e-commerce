@@ -29,20 +29,14 @@ class App extends React.Component {
 
         // listens(checks) to see if ref has been updated w/ new data
         userRef.onSnapshot((snapShot) => {
-          console.log(snapShot);
           // setState w/ user Object
-          this.setState(
-            {
-              currentUser: {
-                id: snapShot.id,
-                // rest of the users props
-                ...snapShot.data(),
-              },
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              // rest of the users props
+              ...snapShot.data(),
             },
-            () => {
-              console.log(this.state);
-            }
-          );
+          });
         });
       } else {
         // if user logs out set to null
