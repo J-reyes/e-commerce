@@ -5,8 +5,10 @@ import { connect } from "react-redux";
 
 // auth library
 import { auth } from "../../firebase/firebase.utils";
-// icon
+// cart related components
 import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropDown from "../cart-dropdown/cart-dropdown.component";
+
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
 import "./header.styles.scss";
@@ -37,6 +39,7 @@ const Header = ({ currentUser }) => {
         )}
         <CartIcon />
       </div>
+      <CartDropDown />
     </div>
   );
 };
