@@ -4,6 +4,8 @@
   flex-direction: column;
   height: 350px;
   align-items: center;
+  // helped w/ allowing the bottom to be placed ontop of the item
+  position: relative;
 
   .image {
     width: 100%;
@@ -11,6 +13,29 @@
     background-size: cover;
     background-position: center;
     margin-bottom:  5px;
+  }
+
+  .custom-button {
+    width: 80%;
+    opacity: 0.7;
+    // we want it always absolutely positioned at the bottom of the item
+    position: absolute;
+    top: 255px;
+    // hides the 'Add to cart' button 
+    display: none;
+  }
+
+  &:hover {
+    .image {
+      opacity: 0.8;
+    }
+
+    // this it's displayed when user hovers over item
+    .custom-button {
+      opacity: 0.85;
+      // doesn't display without flex
+      display: flex;
+    }
   }
 
   .collection-footer {

@@ -22,10 +22,10 @@ const Header = ({ currentUser, hidden }) => {
       </Link>
       {/* nav links */}
       <div className="options">
-        <Link className="option" to="">
+        <Link className="option" to="/shop">
           SHOP
         </Link>
-        <Link className="option" to="">
+        <Link className="option" to="/shop">
           CONTACT
         </Link>
         {currentUser ? (
