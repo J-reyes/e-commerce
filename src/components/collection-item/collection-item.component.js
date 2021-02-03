@@ -1,9 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
+import { addItem } from "../../redux/cart/cart.actions";
+
 import CustomButton from "../custom-button/button.component";
 
 import "./collection-item.styles.scss";
 
-const CollectionItem = ({ id, name, price, imageUrl }) => {
+const CollectionItem = ({ item, addItem }) => {
+  const { name, price, imageUrl } = item;
   return (
     <div className="collection-item">
       {/* div to hold image */}
@@ -13,9 +17,18 @@ const CollectionItem = ({ id, name, price, imageUrl }) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
-      <CustomButton inverted>Add to cart</CustomButton>
+      <CustomButton onClick={() => addItem(item)} inverted>
+        Add to cart
+      </CustomButton>
     </div>
   );
 };
 
-export default CollectionItem;
+const mapDispatchToProps = (dispatch) => ({
+  // our additem function
+  // will get an item as a propery
+  addItem: (item) => dispatch(addItem(item)),
+});
+
+// pass 'null' since we are not mapping any state to props
+export default connect(null, mapDispatchToProps)(CollectionItem);
