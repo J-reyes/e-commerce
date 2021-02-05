@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 // redux action
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
+import { selectCartItemsCount } from "../../redux/cart/cart.selectors";
 
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 
@@ -21,13 +22,11 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCartHidden: () => dispatch(toggleCartHidden()),
 });
 
-// pulling a portion of the state
-// getting a new value based of the state
-const mapStateToProps = ({ cart: { cartItems } }) => ({
-  itemCount: cartItems.reduce(
-    (accumalatedQuantity, cartItem) => accumalatedQuantity + cartItem.quantity,
-    0
-  ),
+// we are now passing our whole reducer state - instead of just a portion of it
+// { cart: { cartItems } }
+const mapStateToProps = (state) => ({
+  // creating a selector
+  itemCount: selectCartItemsCount(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
