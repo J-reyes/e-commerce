@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
 // redux action
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
 import { selectCartItemsCount } from "../../redux/cart/cart.selectors";
@@ -22,11 +24,9 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCartHidden: () => dispatch(toggleCartHidden()),
 });
 
-// we are now passing our whole reducer state - instead of just a portion of it
-// { cart: { cartItems } }
-const mapStateToProps = (state) => ({
+const mapStateToProps = createStructuredSelector({
   // creating a selector
-  itemCount: selectCartItemsCount(state),
+  itemCount: selectCartItemsCount,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
