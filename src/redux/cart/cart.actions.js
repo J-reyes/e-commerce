@@ -11,3 +11,8 @@ export const addItem = item => ({
   // payload is the item we want to add to our cart array
   payload: item
 })
+
+export const clearItemFromCart = item => ({
+  type: CartActionTypes.CLEAR_ITEM_FROM_CART,
+  payload: item
+})
