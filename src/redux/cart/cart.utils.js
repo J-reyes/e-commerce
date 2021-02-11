@@ -12,12 +12,29 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
       cartItem.id === cartItemToAdd.id
         ? // create a new object
           { ...cartItem, quantity: cartItem.quantity + 1 }
-          // return original cart item
-        : cartItem
+        : // return original cart item
+          cartItem
     );
   }
 
   // if existing object is not found
   // will always run first since existingCartItem wont exist just yet
-  return [...cartItems, {...cartItemToAdd, quantity: 1 }]
+  return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+};
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+  const existingCartItem = cartItems.find(
+    (cartItem) => cartItem.id === cartItemToRemove.id
+  );
+
+  if (existingCartItem.quantity === 1) {
+    // Keeps the values where the function turns true
+    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
+  }
+
+  return cartItems.map((cartItem) =>
+    cartItem.id === cartItemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem // keep all other cartItems the same
+  );
 };

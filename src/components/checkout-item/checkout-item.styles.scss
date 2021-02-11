@@ -22,8 +22,17 @@
     width: 23%;
   }
 
+  // aligns items in this div horizontally - places them side by side
   .quantity {
-    padding-left: 20px;
+    display: flex;
+
+    .arrow {
+      cursor: pointer;
+    }
+
+    .value {
+      margin: 0 10px;
+    }
   }
 
   .remove-button {
