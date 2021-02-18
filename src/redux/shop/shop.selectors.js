@@ -21,7 +21,7 @@ export const selectCollections = createSelector(
 // selector for mmatching category
 // pass in the URL params as collectionUrlParam which is a string
 export const selectCollection = memoize((collectionUrlParam) =>
-// queried function
+// currying function
   createSelector(
     [selectCollections],
     // will runs till the .find() returns true and will give us that element
