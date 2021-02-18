@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import memoize from 'lodash.memoize';
 
 // maps the string value to the respective id
 // were string value = the actual property
@@ -19,7 +20,7 @@ export const selectCollections = createSelector(
 
 // selector for mmatching category
 // pass in the URL params as collectionUrlParam which is a string
-export const selectCollection = (collectionUrlParam) =>
+export const selectCollection = memoize((collectionUrlParam) =>
 // queried function
   createSelector(
     [selectCollections],
@@ -29,4 +30,4 @@ export const selectCollection = (collectionUrlParam) =>
         (collections) =>
           collections.id === COLLECTION_ID_MAP[collectionUrlParam]
       )
-  ); 
+  )); 
