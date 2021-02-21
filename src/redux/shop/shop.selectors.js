@@ -1,15 +1,5 @@
 import { createSelector } from "reselect";
-import memoize from 'lodash.memoize';
-
-// maps the string value to the respective id
-// were string value = the actual property
-const COLLECTION_ID_MAP = {
-  hats: 1,
-  sneakers: 2,
-  jackets: 3,
-  womens: 4,
-  mems: 5,
-};
+import memoize from "lodash.memoize";
 
 const selectShop = (state) => state.shop;
 
@@ -18,16 +8,20 @@ export const selectCollections = createSelector(
   (shop) => shop.collections
 );
 
+// convert our newly created data shop object into an array
+export const selectCollectionsForPerview = createSelector(
+  [selectCollections],
+  // get all keys and are returned in an array format
+  collections => Object.keys(collections).map(key => collections[key])
+)
+
 // selector for mmatching category
 // pass in the URL params as collectionUrlParam which is a string
 export const selectCollection = memoize((collectionUrlParam) =>
-// currying function
+  // currying function
   createSelector(
     [selectCollections],
-    // will runs till the .find() returns true and will give us that element
-    (collections) =>
-      collections.find(
-        (collections) =>
-          collections.id === COLLECTION_ID_MAP[collectionUrlParam]
-      )
-  )); 
+      // get the correct collection using te key in our shop data file
+      (collections) => collections[collectionUrlParam]
+  )
+);
