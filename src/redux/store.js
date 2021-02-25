@@ -9,7 +9,12 @@ import logger from "redux-logger";
 import rootReducer from "./root-reducer";
 
 // middleware setup
-const middlewares = [logger];
+const middlewares = [];
+
+// make sure to only output logs when in dev environment
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger)
+}
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
