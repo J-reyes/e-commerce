@@ -1,28 +1,33 @@
 import React from "react";
 // higher order component
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 import "./menu-item.styles.scss";
+
+import {
+  MenuItemContainer,
+  BackgroundImageContainer,
+  ContentContainer,
+  ContentTitle,
+  ContentSubtitle,
+} from "./menu-item.styles";
 
 // destructure props
 const MenuItem = ({ title, imageUrl, size, history, linkUrl, match }) => {
   return (
-    <div
-      className={`${size} menu-item`}
+    <MenuItemContainer
+      size={size}
       onClick={() => history.push(`${match.url}${linkUrl}`)}
     >
-      <div
+      <BackgroundImageContainer
         className="background-image"
-        // give dynamic values
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-        }}
+        imageUrl={imageUrl}
       />
-      <div className="content">
-        <h1 className="title">{title.toUpperCase()}</h1>
-        <span className="subtitle1">SHOP NOW</span>
-      </div>
-    </div>
+      <ContentContainer>
+        <ContentTitle>{title.toUpperCase()}</ContentTitle>
+        <ContentSubtitle>SHOP NOW</ContentSubtitle>
+      </ContentContainer>
+    </MenuItemContainer>
   );
 };
 
