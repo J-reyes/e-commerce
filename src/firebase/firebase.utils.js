@@ -22,7 +22,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   
   const snapShot = await userRef.get();
-  
   // if snapshot of user does not exist
   if(!snapShot.exists) {
     // create it
@@ -44,6 +43,27 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   // incase we need to useRef again
   return userRef
 };
+
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  // create collection
+  const collectionRef = firestore.collection(collectionKey);
+  
+  // batch(group) write into one request
+  // fires when all calls are done being added
+  const batch = firestore.batch();
+  // does not return a new away like .map()
+  objectsToAdd.forEach(obj => {
+    // get document at an empty string
+    // so new doc - creates a key
+    const newDocRef = collectionRef.doc();
+
+    batch.set(newDocRef, obj);
+  });
+
+  // returns a promise
+  return await batch.commit()
+}
 
 firebase.initializeApp(config);
 
