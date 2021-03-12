@@ -74,7 +74,6 @@ export const convertCollectinosSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
 
-    // return obbject from our map function & final object that we actually want
     return {
       // pass a string into encode
       routeName: encodeURI(title.toLowerCase()),
