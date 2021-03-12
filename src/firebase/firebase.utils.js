@@ -69,10 +69,10 @@ export const addCollectionAndDocuments = async (
 
 // gets the whole snapshot object
 export const convertCollectinosSnapshotToMap = (collections) => {
-  // return the right object 
+  // return the right object
   // .doc gives us our query snapshot array
-  const transformedCollection = collections.docs.map(doc => {
-    const {title, items} = doc.data();
+  const transformedCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
 
     // return obbject from our map function & final object that we actually want
     return {
@@ -80,11 +80,16 @@ export const convertCollectinosSnapshotToMap = (collections) => {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
       title,
-      items
-    }
-  })
+      items,
+    };
+  });
 
-  console.log(transformedCollection);
+  return transformedCollection.reduce((accumulator, collection) => {
+    // set key = to collection
+    // {hats: [{hhats collection}]}
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
 };
 
 firebase.initializeApp(config);
