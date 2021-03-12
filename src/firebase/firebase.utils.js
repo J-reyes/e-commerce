@@ -17,15 +17,15 @@ const config = {
 // API request - populates firebase bbut not the app's state
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   // if no userAuth
-  if(!userAuth) return;
+  if (!userAuth) return;
 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
-  
+
   const snapShot = await userRef.get();
   // if snapshot of user does not exist
-  if(!snapShot.exists) {
+  if (!snapShot.exists) {
     // create it
-    const {displayName, email} = userAuth;
+    const { displayName, email } = userAuth;
     const createdAt = new Date();
 
     try {
@@ -33,37 +33,59 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createdAt,
-        ...additionalData
-      })
+        ...additionalData,
+      });
     } catch (err) {
-      console.log('error creating user', err.message);
+      console.log("error creating user", err.message);
     }
   }
 
   // incase we need to useRef again
-  return userRef
+  return userRef;
 };
 
-
-export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
   // create collection
   const collectionRef = firestore.collection(collectionKey);
-  
+
   // batch(group) write into one request
   // fires when all calls are done being added
   const batch = firestore.batch();
   // does not return a new away like .map()
-  objectsToAdd.forEach(obj => {
+  objectsToAdd.forEach((obj) => {
     // get document at an empty string
     // so new doc - creates a key
     const newDocRef = collectionRef.doc();
-
+    // pass ref & value
     batch.set(newDocRef, obj);
   });
 
   // returns a promise
-  return await batch.commit()
-}
+  return await batch.commit();
+};
+
+// gets the whole snapshot object
+export const convertCollectinosSnapshotToMap = (collections) => {
+  // return the right object 
+  // .doc gives us our query snapshot array
+  const transformedCollection = collections.docs.map(doc => {
+    const {title, items} = doc.data();
+
+    // return obbject from our map function & final object that we actually want
+    return {
+      // pass a string into encode
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
+  })
+
+  console.log(transformedCollection);
+};
 
 firebase.initializeApp(config);
 
