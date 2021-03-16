@@ -29,9 +29,10 @@ class ShopPage extends React.Component {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection("collections");
 
-    // get data when ever collectionRef updates
-    // or code runs for thhe first time -> ref will send us the snapshot
-    collectionRef.onSnapshot(async (snapshot) => {
+    
+    // gets data associated to collectionRef
+    // .then() bbecause now it is a promise
+    collectionRef.get().then(async (snapshot) => {
       const collectionsMap = convertCollectinosSnapshotToMap(snapshot);
       updateCollections(collectionsMap);
       this.setState({ loading: false });
