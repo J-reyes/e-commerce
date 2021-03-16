@@ -14,6 +14,11 @@ export const fetchCollectionsSuccess = (collectionsMap) => ({
   payload: collectionsMap,
 });
 
+export const fetchCollectionsFailure = errorMessage => ({
+  type: ShopActionTypes.FETCH_COLLECTIONS_FAILURE,
+  payload: errorMessage
+})
+
 export const fetchCollectionsStartAsync = () => {
   // returning function that gets a dispatch
   return (dispatch) => {
@@ -26,6 +31,6 @@ export const fetchCollectionsStartAsync = () => {
     collectionRef.get().then((snapshot) => {
       const collectionsMap = convertCollectinosSnapshotToMap(snapshot);
       dispatch(fetchCollectionsSuccess(collectionsMap));
-    });
+    }).catch(error => dispatch(fetchCollectionsFailure(error.message)));
   };
 };
