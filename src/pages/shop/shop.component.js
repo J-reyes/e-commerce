@@ -31,7 +31,7 @@ class ShopPage extends React.Component {
 
     
     // gets data associated to collectionRef
-    // .then() bbecause now it is a promise
+    // using .then() bbecause now it is a promise
     collectionRef.get().then(async (snapshot) => {
       const collectionsMap = convertCollectinosSnapshotToMap(snapshot);
       updateCollections(collectionsMap);
