@@ -1,3 +1,4 @@
+// Multiple states ShopAction can bbe in
 const ShopActionTypes = {
   // Start of our collection fetch
   FETCH_COLLECTIONS_START: 'FETCH_COLLECTIONS_START',

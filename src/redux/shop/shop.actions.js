@@ -14,11 +14,12 @@ export const fetchCollectionsSuccess = (collectionsMap) => ({
   payload: collectionsMap,
 });
 
-export const fetchCollectionsFailure = errorMessage => ({
+export const fetchCollectionsFailure = (errorMessage) => ({
   type: ShopActionTypes.FETCH_COLLECTIONS_FAILURE,
-  payload: errorMessage
-})
+  payload: errorMessage,
+});
 
+// handle async activity
 export const fetchCollectionsStartAsync = () => {
   // returning function that gets a dispatch
   return (dispatch) => {
@@ -28,9 +29,12 @@ export const fetchCollectionsStartAsync = () => {
 
     // gets data associated to collectionRef
     // using .then() bbecause now it is a promise
-    collectionRef.get().then((snapshot) => {
-      const collectionsMap = convertCollectinosSnapshotToMap(snapshot);
-      dispatch(fetchCollectionsSuccess(collectionsMap));
-    }).catch(error => dispatch(fetchCollectionsFailure(error.message)));
+    collectionRef
+      .get()
+      .then((snapshot) => {
+        const collectionsMap = convertCollectinosSnapshotToMap(snapshot);
+        dispatch(fetchCollectionsSuccess(collectionsMap));
+      })
+      .catch((error) => dispatch(fetchCollectionsFailure(error.message)));
   };
 };

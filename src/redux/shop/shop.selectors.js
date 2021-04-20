@@ -12,8 +12,9 @@ export const selectCollections = createSelector(
 export const selectCollectionsForPerview = createSelector(
   [selectCollections],
   // get all keys and are returned in an array format
-  collections => collections ? Object.keys(collections).map(key => collections[key]) : []
-)
+  (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
+);
 
 // selector for mmatching category
 // pass in the URL params as collectionUrlParam which is a string
@@ -21,7 +22,20 @@ export const selectCollection = memoize((collectionUrlParam) =>
   // currying function
   createSelector(
     [selectCollections],
-      // get the correct collection using te key in our shop data file
-      (collections) => collections ? collections[collectionUrlParam] : null
+    // get the correct collection using te key in our shop data file
+    (collections) => (collections ? collections[collectionUrlParam] : null)
   )
 );
+
+// selector to fetch collection
+export const selectIsCollectionFetching = createSelector(
+  [selectShop],
+  (shop) => shop.isFetching
+);
+
+// determines whether or not if our collection is null
+export const selectIsCollectionsLoaded = createSelector(
+  [selectShop],
+  // convert to boolean
+  shop => !!shop.collections
+)
