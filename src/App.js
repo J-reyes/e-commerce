@@ -29,26 +29,26 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      // if user exists
-      if (userAuth) {
-        // use userRef returned from createUserProfileDocument
-        const userRef = await createUserProfileDocument(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+    //   // if user exists
+    //   if (userAuth) {
+    //     // use userRef returned from createUserProfileDocument
+    //     const userRef = await createUserProfileDocument(userAuth);
 
-        // listens(checks) to see if ref has been updated w/ new data
-        userRef.onSnapshot((snapShot) => {
-          // setting the user reducer value when
-          // snapshot value updates
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
-        });
-      } else {
-        // we just need the object
-        setCurrentUser(userAuth);
-      }
-    });
+    //     // listens(checks) to see if ref has been updated w/ new data
+    //     userRef.onSnapshot((snapShot) => {
+    //       // setting the user reducer value when
+    //       // snapshot value updates
+    //       setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data(),
+    //       });
+    //     });
+    //   } else {
+    //     // we just need the object
+    //     setCurrentUser(userAuth);
+    //   }
+    // });
   }
 
   // remove subscription
