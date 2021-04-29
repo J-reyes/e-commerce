@@ -12,14 +12,6 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Header from "./components/header/header.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
 
-import {
-  auth,
-  createUserProfileDocument,
-  addCollectionAndDocuments,
-} from "./firebase/firebase.utils";
-// action from redux
-import { setCurrentUser } from "./redux/user/user.actions";
-
 // selector
 import { selectCurrentUser } from "./redux/user/user.selector";
 
@@ -27,14 +19,11 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
-
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
     //   // if user exists
     //   if (userAuth) {
     //     // use userRef returned from createUserProfileDocument
     //     const userRef = await createUserProfileDocument(userAuth);
-
     //     // listens(checks) to see if ref has been updated w/ new data
     //     userRef.onSnapshot((snapShot) => {
     //       // setting the user reducer value when
@@ -82,11 +71,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+  currentUser: selectCurrentUser
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
