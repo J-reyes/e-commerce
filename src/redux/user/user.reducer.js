@@ -1,12 +1,12 @@
 // store user state
 // get state object (last or initial) & a action
 
-import UserActionTypes from './user.types';
+import UserActionTypes from "./user.types";
 
 // set initial state
 const INITIAL_STATE = {
   currentUser: null,
-  error: null
+  error: null,
 };
 
 // state will come from store
@@ -18,13 +18,20 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
-        error: null
+        error: null,
       };
-    case UserActionTypes.SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_OUT_SUCCESS:
       return {
         ...state,
-        error: action.payload
-      }
+        currentUser: null,
+        error: null,
+      };
+    case UserActionTypes.SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_OUT_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
