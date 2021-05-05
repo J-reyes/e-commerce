@@ -1,6 +1,6 @@
 // import affects from sagas - to do different things w/ the store
 // creating actions or listening for actions
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put, all } from "redux-saga/effects";
 import {
   firestore,
   convertCollectinosSnapshotToMap,
@@ -36,4 +36,8 @@ export function* fetchCollectionsStart() {
     ShopActionTypes.FETCH_COLLECTIONS_START,
     fetchCollectionsAsync
   );
+}
+
+export function* shopSagas() {
+  yield all([call(fetchCollectionsStart)])
 }
