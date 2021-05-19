@@ -2,8 +2,7 @@ import React from "react";
 // Higher order component (takes component as an argument)
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-// auth library
-import { auth } from "../../firebase/firebase.utils";
+
 // cart related components
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
