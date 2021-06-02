@@ -15,7 +15,6 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 import {
   auth,
   createUserProfileDocument,
-  addCollectionAndDocuments,
 } from "./firebase/firebase.utils";
 // action from redux
 import { setCurrentUser } from "./redux/user/user.actions";
