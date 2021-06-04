@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 // Higher order component (takes component as an argument)
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -11,8 +11,9 @@ import CartDropDown from "../cart-dropdown/cart-dropdown.component";
 // selectors
 import { selectCartHidden } from "../../redux/cart/cart.selectors";
 import { selectCurrentUser } from "../../redux/user/user.selector";
-// user context
+// contexts
 import CurrentUserContext from "../../contexts/current-user/current-user.context";
+import CartContext from "../../contexts/cart/cart.context";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
@@ -23,9 +24,13 @@ import {
   OptionsContainer,
 } from "./header.styles";
 
-// currentUser prop from auth library
-const Header = ({ hidden }) => {
+const Header = () => {
   const currentUser = useContext(CurrentUserContext);
+  // need state to be in the parent container
+  const [hidden, setHidden] = useState(true);
+  // toggle to opposite value + gets passed as the new function
+  // inside our cart.context
+  const toggleHidden = () => setHidden(!hidden);
 
   return (
     <HeaderContainer>
@@ -45,7 +50,10 @@ const Header = ({ hidden }) => {
             SIGN IN
           </OptionLink>
         )}
-        <CartIcon />
+
+        <CartContext.Provider value={{ hidden, toggleHidden }}>
+          <CartIcon />
+        </CartContext.Provider>
       </OptionsContainer>
       {hidden ? null : <CartDropDown />}
     </HeaderContainer>
