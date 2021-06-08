@@ -1,6 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
-import { addItem } from "../../redux/cart/cart.actions";
+import React, { useContext } from "react";
+import { CartContext } from "../../providers/cart/cart.providers";
 
 import {
   CollectionFooterContainer,
@@ -8,17 +7,19 @@ import {
   BackgroundImage,
   AddButton,
   NameContainer,
-  PriceContainer
-} from './collection-item.styles'
+  PriceContainer,
+} from "./collection-item.styles";
 
-const CollectionItem = ({ item, addItem }) => {
+const CollectionItem = ({ item }) => {
   const { name, price, imageUrl } = item;
+  const { addItem } = useContext(CartContext);
+
   return (
     <CollectionItemContainer>
       {/* div to hold image */}
-      <BackgroundImage className='image' imageUrl={imageUrl}/>
+      <BackgroundImage className="image" imageUrl={imageUrl} />
       {/* Collection footer */}
-      <CollectionFooterContainer >
+      <CollectionFooterContainer>
         <NameContainer>{name}</NameContainer>
         <PriceContainer>{price}</PriceContainer>
       </CollectionFooterContainer>
@@ -29,11 +30,5 @@ const CollectionItem = ({ item, addItem }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  // our additem function
-  // will get an item as a propery
-  addItem: (item) => dispatch(addItem(item)),
-});
-
 // pass 'null' since we are not mapping any state to props
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default CollectionItem;

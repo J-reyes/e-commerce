@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 // Higher order component
@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import CartItem from "../cart-item/cart-item.component";
 import { selectCartItems } from "../../redux/cart/cart.selectors";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
-
+import { CartContext } from "../../providers/cart/cart.providers";
 
 import {
   CartDropDownContainer,
@@ -16,7 +16,9 @@ import {
   EmptyMessage
 } from "./cart-dropdown.styles";
 
-const CartDropDown = ({ cartItems, history, dispatch }) => {
+const CartDropDown = ({ history, dispatch }) => {
+  const { cartItems } = useContext(CartContext);
+
   return (
     <CartDropDownContainer>
       <CartItemsContainer>
@@ -41,10 +43,4 @@ const CartDropDown = ({ cartItems, history, dispatch }) => {
   );
 };
 
-// Get whole state instead of just a slice
-// { cart: { cartItems } } is now just state
-const mapStateToProps = createStructuredSelector({
-  cartItems: selectCartItems,
-});
-
-export default withRouter(connect(mapStateToProps)(CartDropDown));
+export default withRouter(CartDropDown);

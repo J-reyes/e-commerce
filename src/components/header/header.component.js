@@ -13,7 +13,7 @@ import { selectCartHidden } from "../../redux/cart/cart.selectors";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 // contexts
 import CurrentUserContext from "../../contexts/current-user/current-user.context";
-import CartContext from "../../contexts/cart/cart.context";
+import { CartContext } from "../../providers/cart/cart.providers";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
@@ -26,11 +26,7 @@ import {
 
 const Header = () => {
   const currentUser = useContext(CurrentUserContext);
-  // need state to be in the parent container
-  const [hidden, setHidden] = useState(true);
-  // toggle to opposite value + gets passed as the new function
-  // inside our cart.context
-  const toggleHidden = () => setHidden(!hidden);
+  const { hidden } = useContext(CartContext);
 
   return (
     <HeaderContainer>
@@ -50,10 +46,7 @@ const Header = () => {
             SIGN IN
           </OptionLink>
         )}
-
-        <CartContext.Provider value={{ hidden, toggleHidden }}>
-          <CartIcon />
-        </CartContext.Provider>
+        <CartIcon />
       </OptionsContainer>
       {hidden ? null : <CartDropDown />}
     </HeaderContainer>
