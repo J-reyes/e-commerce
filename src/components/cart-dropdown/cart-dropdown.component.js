@@ -1,12 +1,8 @@
 import React, { useContext } from "react";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 // Higher order component
 import { withRouter } from "react-router-dom";
 
 import CartItem from "../cart-item/cart-item.component";
-import { selectCartItems } from "../../redux/cart/cart.selectors";
-import { toggleCartHidden } from "../../redux/cart/cart.actions";
 import { CartContext } from "../../providers/cart/cart.providers";
 
 import {
@@ -16,8 +12,8 @@ import {
   EmptyMessage
 } from "./cart-dropdown.styles";
 
-const CartDropDown = ({ history, dispatch }) => {
-  const { cartItems } = useContext(CartContext);
+const CartDropDown = ({ history }) => {
+  const { cartItems, toggleHidden } = useContext(CartContext);
 
   return (
     <CartDropDownContainer>
@@ -34,7 +30,7 @@ const CartDropDown = ({ history, dispatch }) => {
       <CartDropdownButton
         onClick={() => {
           history.push("/checkout");
-          dispatch(toggleCartHidden()); // short hand dispatch
+          toggleHidden(); // short hand dispatch
         }}
       >
         GO TO CHECKOUT
