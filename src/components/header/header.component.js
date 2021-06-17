@@ -1,16 +1,11 @@
-import React, { useContext, useState } from "react";
-// Higher order component (takes component as an argument)
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
+import React, { useContext } from "react";
+
 // auth library
 import { auth } from "../../firebase/firebase.utils";
 // cart related components
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
 
-// selectors
-import { selectCartHidden } from "../../redux/cart/cart.selectors";
-import { selectCurrentUser } from "../../redux/user/user.selector";
 // contexts
 import CurrentUserContext from "../../contexts/current-user/current-user.context";
 import { CartContext } from "../../providers/cart/cart.providers";
@@ -53,10 +48,4 @@ const Header = () => {
   );
 };
 
-// pass in entire state instead of just a portion
-const mapStateToProps = createStructuredSelector({
-  // createStructuredSelector points to the correct selector and auto passes our top level state
-  hidden: selectCartHidden,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

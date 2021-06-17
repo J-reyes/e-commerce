@@ -1,14 +1,8 @@
 import React, {useContext} from "react";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 import StripeCheckoutButton from "../../components/stripe-button/stripe-button.component";
 import { CartContext } from "../../providers/cart/cart.providers";
-
-import {
-  selectCartTotal,
-} from "../../redux/cart/cart.selectors";
 
 import "./checkout.styles.scss";
 
